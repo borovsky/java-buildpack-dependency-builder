@@ -75,6 +75,7 @@ module Builders
     IS_MACOSX = `uname -s` =~ /Darwin/
 
     IS_UBUNTU = !`which lsb_release 2> /dev/null`.empty?
+    IS_TRUSTY = `lsb_release -rs`.to_f > 14
 
     LEAF_PATCH = File.expand_path('../openjdk/6_and_7/leaf.diff', __FILE__)
 
@@ -115,6 +116,8 @@ module Builders
     def alt_bootdir
       if IS_CENTOS
         '/usr/lib/jvm/java-1.6.0-openjdk.x86_64'
+      elsif IS_UBUNTU && IS_TRUSTY
+        '/usr/lib/jvm/java-6-openjdk-amd64'
       elsif IS_UBUNTU
         '/usr/lib/jvm/java-6-openjdk'
       elsif IS_MACOSX
@@ -133,7 +136,7 @@ module Builders
     end
 
     def cpu_count
-      if IS_CENTOS
+      if File.exists? '/usr/bin/nproc'
         `nproc`.strip
       else
         `sysctl -n hw.ncpu`.strip

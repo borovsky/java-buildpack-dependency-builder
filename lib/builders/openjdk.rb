@@ -26,6 +26,7 @@ module Builders
       @platforms << VagrantPlatform.new('centos6', @version) if options[:platforms].include? 'centos6'
       @platforms << VagrantPlatform.new('lucid', @version) if options[:platforms].include? 'lucid'
       @platforms << VagrantPlatform.new('precise', @version) if options[:platforms].include? 'precise'
+      @platforms << VagrantPlatform.new('trusty', @version) if options[:platforms].include? 'trusty'
       @platforms << LocalPlatform.new(@version) if options[:platforms].include? 'osx'
     end
 

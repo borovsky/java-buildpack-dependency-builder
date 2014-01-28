@@ -55,7 +55,9 @@ module Builders
       Net::HTTP.start(uri.host, uri.port) do |http|
         request = Net::HTTP::Get.new(uri.path)
         http.request request do |response|
-          progress = ProgressIndicator.new(response['Content-Length'].to_i)
+          len = response['Content-Length'].to_i
+          len = 10_000_000 if len == 0 # Fixing bug if Content-Length is empty / missing
+          progress = ProgressIndicator.new(len)
 
           response.read_body do |chunk|
             file.write chunk

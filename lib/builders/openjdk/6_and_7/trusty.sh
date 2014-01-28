@@ -17,7 +17,7 @@ PACKAGES=" \
 	ant \
 	build-essential \
 	curl \
-	lesstif2-dev \
+	libmotif-dev \
 	libasound2-dev \
 	libcups2-dev \
 	libfreetype6-dev \
